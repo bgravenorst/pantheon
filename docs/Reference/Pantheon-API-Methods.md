@@ -622,7 +622,7 @@ None
 
 ### eth_coinbase
 
-Returns the client coinbase address. The coinbase address is the account to which mining rewards are paid. 
+Returns the client coinbase address. The coinbase address is the account to which mining rewards are paid. For Clique and IBFT 2.0 networks it returns the address of the local node.
 
 To set a coinbase address, start Pantheon with the `--miner-coinbase` option set to a valid Ethereum account address.
 You can get the Ethereum account address from a client such as MetaMask or Etherscan. For example:
