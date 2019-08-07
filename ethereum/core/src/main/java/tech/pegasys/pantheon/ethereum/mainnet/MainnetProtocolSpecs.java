@@ -122,10 +122,10 @@ public abstract class MainnetProtocolSpecs {
         .blockBodyValidatorBuilder(MainnetBlockBodyValidator::new)
         .transactionReceiptFactory(MainnetProtocolSpecs::frontierTransactionReceiptFactory)
         .blockReward(FRONTIER_BLOCK_REWARD)
+        .skipZeroBlockRewards(false)
         .blockProcessorBuilder(MainnetBlockProcessor::new)
         .blockValidatorBuilder(MainnetBlockValidator::new)
         .blockImporterBuilder(MainnetBlockImporter::new)
-        .transactionReceiptType(TransactionReceiptType.ROOT)
         .blockHeaderFunctions(new MainnetBlockHeaderFunctions())
         .miningBeneficiaryCalculator(BlockHeader::getCoinbase)
         .name("Frontier");
@@ -159,13 +159,15 @@ public abstract class MainnetProtocolSpecs {
             (transactionProcessor,
                 transactionReceiptFactory,
                 blockReward,
-                miningBeneficiaryCalculator) ->
+                miningBeneficiaryCalculator,
+                skipZeroBlockRewards) ->
                 new DaoBlockProcessor(
                     new MainnetBlockProcessor(
                         transactionProcessor,
                         transactionReceiptFactory,
                         blockReward,
-                        miningBeneficiaryCalculator)))
+                        miningBeneficiaryCalculator,
+                        skipZeroBlockRewards)))
         .name("DaoRecoveryInit");
   }
 
@@ -193,6 +195,7 @@ public abstract class MainnetProtocolSpecs {
 
     return tangerineWhistleDefinition(OptionalInt.empty(), configStackSizeLimit)
         .gasCalculator(SpuriousDragonGasCalculator::new)
+        .skipZeroBlockRewards(true)
         .messageCallProcessorBuilder(
             (evm, precompileContractRegistry) ->
                 new MainnetMessageCallProcessor(
@@ -256,7 +259,6 @@ public abstract class MainnetProtocolSpecs {
                 ? MainnetProtocolSpecs::byzantiumTransactionReceiptFactoryWithReasonEnabled
                 : MainnetProtocolSpecs::byzantiumTransactionReceiptFactory)
         .blockReward(BYZANTIUM_BLOCK_REWARD)
-        .transactionReceiptType(TransactionReceiptType.STATUS)
         .name("Byzantium");
   }
 

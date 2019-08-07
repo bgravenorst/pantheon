@@ -127,7 +127,7 @@ The command line specifies privacy options:
 * [`--privacy-url`](../../Reference/Pantheon-CLI-Syntax.md#privacy-url) specifies the Orion node URL (`clienturl` in `orion.conf`)
 * [`--privacy-public-key-file`](../../Reference/Pantheon-CLI-Syntax.md#privacy-public-key-file) specifies the file containing
 Orion node public key (created in [3. Generate Orion Keys](#3-generate-orion-keys))
-* [`--rpc-http-api`](../../Reference/Pantheon-CLI-Syntax.md#rpc-http-api) includes `EEA` in the list of 
+* [`--rpc-http-api`](../../Reference/Pantheon-CLI-Syntax.md#rpc-http-api) includes `EEA` and `PRIV` in the list of 
 JSON-RPC APIs to enable privacy JSON-RPC API methods.  
 * [`--min-gas-price`](../../Reference/Pantheon-CLI-Syntax.md#min-gas-price) set to 0 for a [free gas network](../../Configuring-Pantheon/FreeGas.md).
 

@@ -32,7 +32,6 @@ import tech.pegasys.pantheon.ethereum.jsonrpc.internal.results.TransactionReceip
 import tech.pegasys.pantheon.ethereum.jsonrpc.internal.results.TransactionReceiptStatusResult;
 import tech.pegasys.pantheon.ethereum.mainnet.ProtocolSchedule;
 import tech.pegasys.pantheon.ethereum.mainnet.ProtocolSpec;
-import tech.pegasys.pantheon.ethereum.mainnet.TransactionReceiptType;
 import tech.pegasys.pantheon.util.bytes.BytesValue;
 
 import java.math.BigInteger;
@@ -90,9 +89,9 @@ public class EthGetTransactionReceiptTest {
           null,
           null,
           null,
-          TransactionReceiptType.ROOT,
           BlockHeader::getCoinbase,
-          null);
+          null,
+          false);
   private final ProtocolSpec<Void> statusTransactionTypeSpec =
       new ProtocolSpec<>(
           "status",
@@ -109,9 +108,9 @@ public class EthGetTransactionReceiptTest {
           null,
           null,
           null,
-          TransactionReceiptType.STATUS,
           BlockHeader::getCoinbase,
-          null);
+          null,
+          false);
 
   private final JsonRpcParameter parameters = new JsonRpcParameter();
 
@@ -127,7 +126,7 @@ public class EthGetTransactionReceiptTest {
       Hash.fromHexString("cbef69eaf44af151aa66677ae4b8d8c343a09f667c873a3a6f4558fa4051fa5f");
   Object[] params = new Object[] {receiptString};
   private final JsonRpcRequest request =
-      new JsonRpcRequest("1", "eth_getTransactionReceipt", params);;
+      new JsonRpcRequest("1", "eth_getTransactionReceipt", params);
 
   @Test
   public void shouldCreateAStatusTransactionReceiptWhenStatusTypeProtocol() {

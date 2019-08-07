@@ -54,6 +54,8 @@ public class ProtocolSpec<C> {
 
   private final PrecompileContractRegistry precompileContractRegistry;
 
+  private final boolean skipZeroBlockRewards;
+
   /**
    * Creates a new protocol specification instance.
    *
@@ -71,9 +73,9 @@ public class ProtocolSpec<C> {
    * @param transactionReceiptFactory the transactionReceiptFactory to use
    * @param difficultyCalculator the difficultyCalculator to use
    * @param blockReward the blockReward to use.
-   * @param transactionReceiptType the type of transaction receipt to use, one of
    * @param miningBeneficiaryCalculator determines to whom mining proceeds are paid
    * @param precompileContractRegistry all the pre-compiled contracts added
+   * @param skipZeroBlockRewards should rewards be skipped if it is zero
    */
   public ProtocolSpec(
       final String name,
@@ -90,9 +92,9 @@ public class ProtocolSpec<C> {
       final TransactionReceiptFactory transactionReceiptFactory,
       final DifficultyCalculator<C> difficultyCalculator,
       final Wei blockReward,
-      final TransactionReceiptType transactionReceiptType,
       final MiningBeneficiaryCalculator miningBeneficiaryCalculator,
-      final PrecompileContractRegistry precompileContractRegistry) {
+      final PrecompileContractRegistry precompileContractRegistry,
+      final boolean skipZeroBlockRewards) {
     this.name = name;
     this.evm = evm;
     this.transactionValidator = transactionValidator;
@@ -109,6 +111,7 @@ public class ProtocolSpec<C> {
     this.blockReward = blockReward;
     this.miningBeneficiaryCalculator = miningBeneficiaryCalculator;
     this.precompileContractRegistry = precompileContractRegistry;
+    this.skipZeroBlockRewards = skipZeroBlockRewards;
   }
 
   /**
@@ -235,6 +238,17 @@ public class ProtocolSpec<C> {
    */
   public Wei getBlockReward() {
     return blockReward;
+  }
+
+  /**
+   * Sometimes we apply zero block rewards to the Trie (pre EIP158) sometimes we don't (post EIP158
+   * and all clique nets). The initial behavior was to never apply zero rewards. If a zero reward is
+   * applied it could affect the state tree with a "empty" account.
+   *
+   * @return If we skip block rewards when the reward is zero.
+   */
+  public boolean isSkipZeroBlockRewards() {
+    return skipZeroBlockRewards;
   }
 
   public MiningBeneficiaryCalculator getMiningBeneficiaryCalculator() {
