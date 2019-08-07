@@ -5,7 +5,7 @@ description: Configuring Privacy
 
 ### Prerequisites
 
-* [Orion](https://docs.orion.pegasys.tech/en/latest/Installation/Build-From-Source/)
+* [Orion](https://docs.orion.pegasys.tech/en/latest/Installation/Overview/)
 
 Configuring a network that supports private transactions requires starting an Orion node for each
 Pantheon node. Pantheon command line options associate the Pantheon node with the Orion node. 
